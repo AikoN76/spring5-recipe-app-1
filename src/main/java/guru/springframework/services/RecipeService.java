@@ -8,10 +8,11 @@ import java.util.Set;
 
 public interface RecipeService {
 
-    Set<Recipe> getRecipes();
+    Set<RecipeCommand> getRecipes();
 
-    Recipe findById(Long id);
+    Recipe findById(Long l);
 
-    RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand);
+    RecipeCommand findCommandById(Long l);
 
+    RecipeCommand saveRecipeCommand(RecipeCommand command);
 }

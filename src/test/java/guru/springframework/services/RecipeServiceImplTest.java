@@ -1,5 +1,6 @@
 package guru.springframework.services;
 
+import guru.springframework.command.RecipeCommand;
 import guru.springframework.converters.RecipeCommandToRecipe;
 import guru.springframework.converters.RecipeToRecipeCommand;
 import guru.springframework.domain.Recipe;
@@ -40,11 +41,11 @@ public class RecipeServiceImplTest {
 
     @Test
     public void getRecipes() {
-        Recipe recipe = new Recipe();
-        Set<Recipe> recipesData = new HashSet<>();
-        recipesData.add(recipe);
+        RecipeCommand recipeCommand = new RecipeCommand();
+        Set<RecipeCommand> recipesData = new HashSet<>();
+        recipesData.add(recipeCommand);
         when(recipeService.getRecipes()).thenReturn(recipesData);
-        Set<Recipe> recipes = recipeService.getRecipes();
+        Set<RecipeCommand> recipes = recipeService.getRecipes();
         assertEquals(recipes.size(), 1);
         verify(recipeRepository, times(1)).findAll();
     }
