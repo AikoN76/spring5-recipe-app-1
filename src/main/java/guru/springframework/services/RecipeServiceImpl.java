@@ -31,8 +31,10 @@ public class RecipeServiceImpl implements RecipeService {
     public Set<RecipeCommand> getRecipes() {
         log.debug("I'm in the service");
 
+        Set<Recipe> recipeSet = new HashSet<>();
+        recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
         Set<RecipeCommand> recipeCommandSet = new HashSet<>();
-        recipeRepository.findAll().iterator().forEachRemaining(recipe -> {
+        recipeSet.iterator().forEachRemaining(recipe -> {
             recipeCommandSet.add(recipeToRecipeCommand.convert(recipe));
         });
         return recipeCommandSet;

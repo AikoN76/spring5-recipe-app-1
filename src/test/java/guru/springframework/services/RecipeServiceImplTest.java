@@ -9,14 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -41,10 +39,10 @@ public class RecipeServiceImplTest {
 
     @Test
     public void getRecipes() {
-        RecipeCommand recipeCommand = new RecipeCommand();
-        Set<RecipeCommand> recipesData = new HashSet<>();
-        recipesData.add(recipeCommand);
-        when(recipeService.getRecipes()).thenReturn(recipesData);
+        Recipe recipe = new Recipe();
+        Set<Recipe> recipesData = new HashSet<>();
+        recipesData.add(recipe);
+        when(recipeRepository.findAll()).thenReturn(recipesData);
         Set<RecipeCommand> recipes = recipeService.getRecipes();
         assertEquals(recipes.size(), 1);
         verify(recipeRepository, times(1)).findAll();
