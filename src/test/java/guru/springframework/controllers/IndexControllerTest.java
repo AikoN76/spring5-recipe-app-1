@@ -1,8 +1,10 @@
 package guru.springframework.controllers;
 
+import guru.springframework.command.IngredientCommand;
 import guru.springframework.command.RecipeCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
+import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.RecipeServiceImpl;
 import org.junit.Before;
@@ -21,12 +23,9 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class IndexControllerTest {
-
-    private IndexController indexController;
 
     @Mock
     RecipeService recipeService;
@@ -34,43 +33,50 @@ public class IndexControllerTest {
     @Mock
     Model model;
 
+    IndexController controller;
+
     @Before
-    public void setup(){
-       MockitoAnnotations.initMocks(this);
-       indexController = new IndexController(recipeService);
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+
+        controller = new IndexController(recipeService);
     }
 
     @Test
     public void testMockMVC() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"));
     }
 
     @Test
-    public void getIndexPage() {
+    public void getIndexPage() throws Exception {
 
         //given
-        Set<RecipeCommand> recipeSet = new HashSet<>();
+        Set<RecipeCommand> recipes = new HashSet<>();
+        recipes.add(new RecipeCommand());
+
         RecipeCommand recipeCommand = new RecipeCommand();
         recipeCommand.setId(1L);
-        recipeSet.add(new RecipeCommand());
-        recipeSet.add(recipeCommand);
+
+        recipes.add(recipeCommand);
+
+        when(recipeService.getRecipes()).thenReturn(recipes);
+
+        ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 
         //when
-        when(recipeService.getRecipes()).thenReturn(recipeSet);
+        String viewName = controller.getIndexPage(model);
 
-        ArgumentCaptor<Set<RecipeCommand>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 
         //then
-       String viewName = indexController.getIndexPage(model);
-       assertEquals("index", viewName);
-       verify(recipeService, times(1)).getRecipes();
-       verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
-       Set<RecipeCommand> setInController = argumentCaptor.getValue();
-       assertEquals(2, setInController.size());
+        assertEquals("index", viewName);
+        verify(recipeService, times(1)).getRecipes();
+        verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
+        Set<Recipe> setInController = argumentCaptor.getValue();
+        assertEquals(2, setInController.size());
     }
-
 
 }
