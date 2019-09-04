@@ -27,13 +27,13 @@ public class UnitOfMeasureRepositoryIT {
 
     @Test
     public void findByUom() {
-        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByUom("Teaspoon");
-        assertEquals("Teaspoon", uomOptional.get().getUom());
+        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
+        assertEquals("Teaspoon", uomOptional.get().getDescription());
     }
 
     @Test
     public void findByUomCup() {
-        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByUom("Cup");
-        assertEquals("Cup", uomOptional.get().getUom());
+        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Cup");
+        assertEquals("Cup", uomOptional.get().getDescription());
     }
 }

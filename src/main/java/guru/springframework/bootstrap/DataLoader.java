@@ -102,37 +102,37 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         List<Recipe> recipes = new ArrayList<>(2);
 
         //get UOMs
-        Optional<UnitOfMeasure> eachUOMOptional = unitOfMeasureRepository.findByUom("Each");
+        Optional<UnitOfMeasure> eachUOMOptional = unitOfMeasureRepository.findByDescription("Each");
 
         if(!eachUOMOptional.isPresent()){
             new RuntimeException("Expected UOM Not Found!");
         }
 
-        Optional<UnitOfMeasure> tableSpoonUOMOptional = unitOfMeasureRepository.findByUom("Tablespoon");
+        Optional<UnitOfMeasure> tableSpoonUOMOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
 
         if(!tableSpoonUOMOptional.isPresent()){
             new RuntimeException("Expected UOM Not Found!");
         }
 
-        Optional<UnitOfMeasure> teaSpoonUOMOptional = unitOfMeasureRepository.findByUom("Teaspoon");
+        Optional<UnitOfMeasure> teaSpoonUOMOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
 
         if(!teaSpoonUOMOptional.isPresent()){
             new RuntimeException("Expected UOM Not Found!");
         }
 
-        Optional<UnitOfMeasure> dashSpoonUOMOptional = unitOfMeasureRepository.findByUom("Dash");
+        Optional<UnitOfMeasure> dashSpoonUOMOptional = unitOfMeasureRepository.findByDescription("Dash");
 
         if(!dashSpoonUOMOptional.isPresent()){
             new RuntimeException("Expected UOM Not Found!");
         }
 
-        Optional<UnitOfMeasure> pintUOMOptional = unitOfMeasureRepository.findByUom("Pint");
+        Optional<UnitOfMeasure> pintUOMOptional = unitOfMeasureRepository.findByDescription("Pint");
 
         if(!pintUOMOptional.isPresent()){
             new RuntimeException("Expected UOM Not Found!");
         }
 
-        Optional<UnitOfMeasure> cupsUOMOptional = unitOfMeasureRepository.findByUom("Cup");
+        Optional<UnitOfMeasure> cupsUOMOptional = unitOfMeasureRepository.findByDescription("Cup");
 
         if(!cupsUOMOptional.isPresent()){
             new RuntimeException("Expected UOM Not Found!");

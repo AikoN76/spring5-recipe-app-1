@@ -35,7 +35,7 @@ public class UnitOfMeasureToUnitOfMeasureCommandTest {
         //given
         UnitOfMeasureCommand command = new UnitOfMeasureCommand();
         command.setId(LONG_VALUE);
-        command.setUom(DESCRIPTION);
+        command.setDescription(DESCRIPTION);
 
         //when
         UnitOfMeasure uom = converter.convert(command);
@@ -43,7 +43,7 @@ public class UnitOfMeasureToUnitOfMeasureCommandTest {
         //then
         assertNotNull(uom);
         assertEquals(LONG_VALUE, uom.getId());
-        assertEquals(DESCRIPTION, uom.getUom());
+        assertEquals(DESCRIPTION, uom.getDescription());
 
     }
 }
