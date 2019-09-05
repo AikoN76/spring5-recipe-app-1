@@ -1,6 +1,6 @@
 package guru.springframework.services;
 
-import guru.springframework.command.IngredientCommand;
+import guru.springframework.commands.IngredientCommand;
 import guru.springframework.converters.IngredientCommandToIngredient;
 import guru.springframework.converters.IngredientToIngredientCommand;
 import guru.springframework.domain.Ingredient;
@@ -80,17 +80,29 @@ public class IngredientServiceImpl implements IngredientService {
                 );
             } else {
                 // add new ingredient
+                Ingredient ingredient = ingredientCommandToIngredient.convert(ingredientCommand);
+                ingredient.setRecipe(recipe);
                 recipe.addIngredient(ingredientCommandToIngredient.convert(ingredientCommand));
             }
 
             Recipe savedRecipe = recipeRepository.save(recipe);
-            //to do check for fail
-            return ingredientToIngredientCommand.convert(savedRecipe.getIngredients()
-                    .stream()
+
+            Optional<Ingredient> savedIngredientOptional = savedRecipe.getIngredients().stream()
                     .filter(recipeIngredient -> recipeIngredient.getId().equals(ingredientCommand.getId()))
-                    .findFirst()
-                    .get()
-            );
+                    .findFirst();
+
+            // check by description
+            if(!savedIngredientOptional.isPresent()){
+                // not totally safe... But best guess
+                savedIngredientOptional = savedRecipe.getIngredients().stream()
+                        .filter(recipeIngredient -> recipeIngredient.getDescription().equals(ingredientCommand.getDescription()))
+                        .filter(recipeIngredient -> recipeIngredient.getAmount().equals(ingredientCommand.getAmount()))
+                        .filter(recipeIngredient -> recipeIngredient.getUom().getId().equals(ingredientCommand.getUom().getId()))
+                        .findFirst();
+            }
+
+            //to do check for fail
+            return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
 
         }
 

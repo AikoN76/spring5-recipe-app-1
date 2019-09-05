@@ -1,4 +1,4 @@
-package guru.springframework.command;
+package guru.springframework.commands;
 
 import guru.springframework.domain.Difficulty;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package guru.springframework.controllers;
 
-import guru.springframework.command.RecipeCommand;
+import guru.springframework.commands.RecipeCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.services.RecipeService;
 import org.junit.Before;

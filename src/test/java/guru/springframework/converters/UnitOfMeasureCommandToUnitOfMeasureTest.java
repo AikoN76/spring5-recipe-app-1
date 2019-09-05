@@ -1,6 +1,6 @@
 package guru.springframework.converters;
 
-import guru.springframework.command.UnitOfMeasureCommand;
+import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.domain.UnitOfMeasure;
 import org.junit.Before;
 import org.junit.Test;

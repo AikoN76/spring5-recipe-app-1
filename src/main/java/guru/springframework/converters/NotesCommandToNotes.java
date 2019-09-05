@@ -1,6 +1,6 @@
 package guru.springframework.converters;
 
-import guru.springframework.command.NotesCommand;
+import guru.springframework.commands.NotesCommand;
 import guru.springframework.domain.Notes;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;

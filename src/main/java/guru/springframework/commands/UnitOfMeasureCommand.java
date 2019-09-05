@@ -1,4 +1,4 @@
-package guru.springframework.command;
+package guru.springframework.commands;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,8 @@
 package guru.springframework.controllers;
 
-import guru.springframework.command.IngredientCommand;
+import guru.springframework.commands.IngredientCommand;
+import guru.springframework.commands.RecipeCommand;
+import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -22,7 +24,7 @@ public class IngredientController {
 
     private final UnitOfMeasureService unitOfMeasureService;
 
-    public IngredientController(RecipeService recipeService, IngredientService ingredientService, UnitOfMeasureService unitOfMeasureService) {
+    public IngredientController(IngredientService ingredientService, RecipeService recipeService, UnitOfMeasureService unitOfMeasureService) {
         this.recipeService = recipeService;
         this.ingredientService = ingredientService;
         this.unitOfMeasureService = unitOfMeasureService;
@@ -33,7 +35,7 @@ public class IngredientController {
     public String listIngredients(@PathVariable String recipeId, Model model){
         log.debug("Getting ingredient list for recipe id: " + recipeId);
 
-        // use command object to avoid lazy load errors in Thymeleaf.
+        // use commands object to avoid lazy load errors in Thymeleaf.
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(recipeId)));
 
         return "recipe/ingredient/list";
@@ -45,6 +47,26 @@ public class IngredientController {
                                        @PathVariable String id, Model model){
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id)));
         return "recipe/ingredient/show";
+    }
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newRecipe(@PathVariable String recipeId, Model model){
+        // make sure we have a good recipe id value
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+        // todo raise an exception if null
+        if(recipeCommand == null){
+            throw new RuntimeException("Recipe not found with id: " + recipeId);
+        }
+        // need to return back the parent id to the form hidden property
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+
+        // init uom
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+        return "recipe/ingredient/ingredientform";
     }
 
     @GetMapping

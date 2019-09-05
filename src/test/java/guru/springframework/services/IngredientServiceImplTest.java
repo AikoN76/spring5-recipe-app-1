@@ -1,6 +1,6 @@
 package guru.springframework.services;
 
-import guru.springframework.command.IngredientCommand;
+import guru.springframework.commands.IngredientCommand;
 import guru.springframework.converters.IngredientCommandToIngredient;
 import guru.springframework.converters.IngredientToIngredientCommand;
 import guru.springframework.converters.UnitOfMeasureCommandToUnitOfMeasure;
