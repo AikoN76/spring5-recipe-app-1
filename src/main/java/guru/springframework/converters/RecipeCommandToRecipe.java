@@ -41,6 +41,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
         recipe.setDirections(recipeCommand.getDirections());
         recipe.setNotes(notesConverter.convert(recipeCommand.getNotes()));
 
+
         if (recipeCommand.getCategories() != null && recipeCommand.getCategories().size() > 0){
             recipeCommand.getCategories()
                     .forEach( category -> recipe.getCategories().add(categoryConveter.convert(category)));
