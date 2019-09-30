@@ -28,11 +28,11 @@
                     <h1 class="panel-title">My Recipes!</h1>
                 </div>
                 <div class="panel-body">
-                        <h1>Oops!</h1>
-                        <h2>404 - The Page can't be found</h2>
-                        <!--/*@thymesVar id="exception" type=""*/-->
-                        <p th:text="${exception.getMessage()}"></p>
-                        <a href="#" th:href="@{'/'}">Go to Homepage</a>
+                    <h1>Oops!</h1>
+                    <h2>400 - Bad request:</h2>
+                    <!--/*@thymesVar id="exception" type=""*/-->
+                    <p th:text="${exception.getMessage()}"></p>
+                    <a href="#" th:href="@{'/'}">Go to Homepage</a>
                 </div>
             </div>
         </div>
